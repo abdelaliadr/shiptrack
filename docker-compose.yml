@@ -1,0 +1,26 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: shiptrack_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: shiptrack_db
+      POSTGRES_USER: shiptrack_user
+      POSTGRES_PASSWORD: shiptrack_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: shiptrack_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@shiptrack.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+
+volumes:
+  postgres_data:
