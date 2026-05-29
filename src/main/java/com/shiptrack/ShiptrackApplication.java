@@ -1,9 +1,10 @@
-package com.spring.oderservice;
+package com.shiptrack;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import com.spring.config.AppProperties;
+
+import com.shiptrack.config.AppProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(AppProperties.class)

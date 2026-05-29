@@ -1,4 +1,4 @@
-package com.spring.config;
+package com.shiptrack.config;
 
 import lombok.Getter;
 import lombok.Setter;
