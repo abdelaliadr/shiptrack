@@ -83,8 +83,8 @@ public class SecurityConfig {
     // Wires our UserDetailsService + password encoder together
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider((UserDetailsService) passwordEncoder());
-        provider.setUserDetailsPasswordService((UserDetailsPasswordService) userDetailsService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
