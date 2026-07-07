@@ -47,12 +47,13 @@ public class SecurityConfig {
 
             // Define which endpoints are public vs protected
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/shipments/*").permitAll()
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/actuator/health").permitAll()
-                .anyRequest().authenticated()
-            )
+            	    .requestMatchers("/api/auth/**").permitAll()
+            	    .requestMatchers(HttpMethod.GET, "/api/shipments/*").permitAll()
+            	    .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
+            	    .requestMatchers("/actuator/health").permitAll()
+            	    .requestMatchers("/error").permitAll()
+            	    .anyRequest().authenticated()
+            	)
 
             // No sessions — every request must carry a JWT
             .sessionManagement(session -> session

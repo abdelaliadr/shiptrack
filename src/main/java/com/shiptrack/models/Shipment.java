@@ -1,6 +1,7 @@
 package com.shiptrack.models;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -35,9 +36,6 @@ public class Shipment {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(nullable= false, unique =true)
-	private int trackingCode;
 	
 	@Column(nullable = false, length = 50)
 	private String senderName;
@@ -84,13 +82,13 @@ public class Shipment {
 	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp
 	@Column(nullable = false)
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
 	
 	
-	private Date deliveredAt;
+	private LocalDateTime deliveredAt;
 
 }

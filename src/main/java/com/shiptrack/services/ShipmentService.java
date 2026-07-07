@@ -17,11 +17,14 @@ import com.shiptrack.models.User;
 import com.shiptrack.repositories.ShipmentRepository;
 import com.shiptrack.repositories.TrackingEventRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ShipmentService {
 	
-	private ShipmentRepository shipmentRepository;
-    private TrackingEventRepository trackingEventRepository;
+	private final ShipmentRepository shipmentRepository;
+    private final TrackingEventRepository trackingEventRepository;
 
     // ===== Create a shipment =====
     public ShipmentResponse createShipment(CreateShipmentRequest request, User owner) {
@@ -41,7 +44,7 @@ public class ShipmentService {
                 .owner(owner)
                 .build();
 
-        shipmentRepository.save(shipment);
+        Shipment savedShipment = shipmentRepository.save(shipment);
 
         // Create the first tracking event automatically
         TrackingEvent firstEvent = TrackingEvent.builder()
@@ -53,7 +56,7 @@ public class ShipmentService {
 
         trackingEventRepository.save(firstEvent);
 
-        return toShipmentResponse(shipment);
+        return toShipmentResponse(savedShipment);
     }
 
     // ===== Get all shipments for the logged-in business user =====
