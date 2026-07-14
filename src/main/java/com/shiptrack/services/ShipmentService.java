@@ -27,6 +27,7 @@ public class ShipmentService {
 	
 	private final ShipmentRepository shipmentRepository;
     private final TrackingEventRepository trackingEventRepository;
+    private final EmailService emailService;
 
     // ===== Create a shipment =====
     public ShipmentResponse createShipment(CreateShipmentRequest request, User owner) {
@@ -121,7 +122,9 @@ public class ShipmentService {
                 .createdBy(updatedBy)
                 .build();
     	
-    	trackingEventRepository.save(event);
+    	TrackingEvent savedEvent = trackingEventRepository.save(event);
+    	
+    	emailService.sendStatusUpdateEmail(shipment.getOwner(), shipment, savedEvent);
     	
     	return toShipmentResponse(shipment);
     }
