@@ -1,5 +1,6 @@
 package com.shiptrack.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import com.shiptrack.dtos.CreateShipmentRequest;
 import com.shiptrack.dtos.ShipmentDetailResponse;
 import com.shiptrack.dtos.ShipmentResponse;
 import com.shiptrack.dtos.TrackingEventResponse;
+import com.shiptrack.dtos.UpdateStatusRequest;
 import com.shiptrack.models.Shipment;
 import com.shiptrack.models.ShipmentStatus;
 import com.shiptrack.models.TrackingEvent;
@@ -95,6 +97,33 @@ public class ShipmentService {
                 shipment.getCreatedAt(),
                 eventResponses
         );
+    }
+    
+    
+    public ShipmentResponse updateStatus(Long shipmentId, UpdateStatusRequest request, User updatedBy) {
+    	Shipment shipment = shipmentRepository.findById(shipmentId)
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
+    	
+    	shipment.setStatus(request.getStatus());
+    	
+    	if(request.getStatus() == ShipmentStatus.DELIVERED) {
+    		shipment.setDeliveredAt(LocalDateTime.now());
+    	}
+    	
+    	Shipment savedShipment = shipmentRepository.save(shipment);
+    	
+    	//creating new event after status update
+    	TrackingEvent event = TrackingEvent.builder()
+                .shipment(savedShipment)
+                .status(request.getStatus())
+                .note(request.getNote())
+                .location(request.getLocation())
+                .createdBy(updatedBy)
+                .build();
+    	
+    	trackingEventRepository.save(event);
+    	
+    	return toShipmentResponse(shipment);
     }
 
     // ===== Helper: Entity → simple response =====
