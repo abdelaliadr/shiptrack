@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shiptrack.config.UserPrincipal;
+import com.shiptrack.dtos.AssignAgentRequest;
 import com.shiptrack.dtos.CreateShipmentRequest;
 import com.shiptrack.dtos.ShipmentDetailResponse;
 import com.shiptrack.dtos.ShipmentResponse;
@@ -65,5 +66,31 @@ public class ShipmentController {
     	ShipmentResponse response = shipmentService.updateStatus(id, request, principal.getUser());
     	
     	return ResponseEntity.ok(response);
+    }
+    
+ // Admin: assign agent
+    @PatchMapping("/{id}/assign")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ShipmentResponse> assignAgent(
+            @PathVariable Long id,
+            @RequestBody AssignAgentRequest request) {
+
+        return ResponseEntity.ok(shipmentService.assignAgent(id, request));
+    }
+
+    // Admin: get all shipments
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ShipmentResponse>> getAllShipments() {
+        return ResponseEntity.ok(shipmentService.getAllShipments());
+    }
+
+    // Agent: get assigned shipments
+    @GetMapping("/assigned")
+    @PreAuthorize("hasRole('AGENT')")
+    public ResponseEntity<List<ShipmentResponse>> getAssignedShipments(
+            @AuthenticationPrincipal UserPrincipal principal) {
+
+        return ResponseEntity.ok(shipmentService.getAssignedShipments(principal.getUser()));
     }
 }

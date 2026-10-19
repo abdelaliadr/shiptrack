@@ -11,5 +11,6 @@ import com.shiptrack.models.Shipment;
 public interface ShipmentRepository extends JpaRepository<Shipment, Long>{
 	
 	List<Shipment> findByOwnerId(Long ownerId);
+	List<Shipment> findByAgentId(Long agentId);
 
 }
