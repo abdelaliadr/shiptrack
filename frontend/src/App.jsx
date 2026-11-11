@@ -3,12 +3,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuthStore } from './store/authStore'
-
-const roleHome = {
-  BUSINESS: '/dashboard',
-  AGENT: '/agent',
-  ADMIN: '/admin',
-}
+import { ROLE_HOME } from './constants/roles'
 
 // Visiting "/" sends you to the right place depending on login state
 function HomeRedirect() {
@@ -16,7 +11,7 @@ function HomeRedirect() {
   const role = useAuthStore((state) => state.role)
 
   if (!token) return <Navigate to="/login" replace />
-  return <Navigate to={roleHome[role] || '/login'} replace />
+  return <Navigate to={ROLE_HOME[role] || '/login'} replace />
 }
 
 export default function App() {

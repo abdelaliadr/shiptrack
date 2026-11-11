@@ -1,18 +1,9 @@
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@tanstack/react-query'
-import { useNavigate, Link } from 'react-router-dom'
-import api from '../api/axios'
-import { useAuthStore } from '../store/authStore'
+import { Link } from 'react-router-dom'
+import { useLogin } from '../hooks/useAuth'
 
-const roleHome = {
-    BUSINESS: '/dashboard',
-    AGENT: '/agent',
-    ADMIN: '/admin',
-}
 
 export default function Login() {
-    const navigate = useNavigate();
-    const login = useAuthStore((state) => state.login)
 
     const {
         register,
@@ -21,14 +12,7 @@ export default function Login() {
     } = useForm()
 
     // useMutation = for requests that change data (POST, PATCH, DELETE)
-    const mutation = useMutation({
-      mutationFn: (credentials) => api.post('/auth/login', credentials),
-      onSuccess: (response) => {
-        const data = response.data // { token, role, name }
-        login(data)
-        navigate(roleHome[data.role] || '/login', { replace: true })
-      },
-    })
+    const mutation = useLogin()
 
     const onSubmit = (formData) => {
         mutation.mutate(formData)

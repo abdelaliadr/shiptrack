@@ -1,12 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-
-// Where each role lands by default
-const roleHome = {
-  BUSINESS: '/dashboard',
-  AGENT: '/agent',
-  ADMIN: '/admin',
-}
+import { ROLE_HOME} from '../constants/roles'
 
 export default function ProtectedRoute({ children, allowedRoles }) {
   const token = useAuthStore((state) => state.token)
@@ -19,7 +13,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
 
   // 2. Logged in but wrong role -> send them to their own home page
   if (allowedRoles && !allowedRoles.includes(role)) {
-    return <Navigate to={roleHome[role] || '/login'} replace />
+    return <Navigate to={ROLE_HOME[role] || '/login'} replace />
   }
 
   // 3. All good -> show the page
