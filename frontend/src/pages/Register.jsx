@@ -24,50 +24,40 @@ export default function Register() {
     'Registration failed. This email may already be registered.'
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
-      <div className="w-full max-w-md bg-white rounded-xl shadow p-8">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-1">Create account</h1>
-        <p className="text-gray-500 text-center mb-6">Join Shiptrack to manage deliveries</p>
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
+      <div className="card w-full max-w-md p-8">
+        <h1 className="text-2xl font-bold mb-1">Create account</h1>
+        <p className="text-muted mb-6">Join Shiptrack to manage deliveries</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Full name
-            </label>
+            <label className="label">Full name</label>
             <input
               type="text"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
               {...register('name', { required: 'Name is required' })}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
+            {errors.name && <p className="error-text">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
+            <label className="label">Email</label>
             <input
               type="email"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
               {...register('email', { required: 'Email is required' })}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="error-text">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
+            <label className="label">Password</label>
             <input
               type="password"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
               {...register('password', {
                 required: 'Password is required',
                 minLength: {
@@ -77,55 +67,40 @@ export default function Register() {
               })}
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password.message}
-              </p>
+              <p className="error-text">{errors.password.message}</p>
             )}
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
-            </label>
-            <input
-              type="tel"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              {...register('phone')}
-            />
+            <label className="label">Phone</label>
+            <input type="tel" className="input" {...register('phone')} />
           </div>
 
           {/* Role */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              I am a
-            </label>
-            <select
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              {...register('role')}
-            >
+            <label className="label">I am a</label>
+            <select className="input" {...register('role')}>
               <option value="BUSINESS">Business (I ship packages)</option>
-              <option value="AGENT">Delivery Agent</option>
+              <option value="AGENT">Delivery agent</option>
             </select>
           </div>
 
           {/* Error from the backend */}
-          {mutation.isError && (
-            <p className="text-red-500 text-sm">{errorMessage}</p>
-          )}
+          {mutation.isError && <p className="error-text">{errorMessage}</p>}
 
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 disabled:opacity-50"
+            className="btn-primary w-full"
           >
             {mutation.isPending ? 'Creating account...' : 'Register'}
           </button>
         </form>
 
-        <p className="text-sm text-gray-500 mt-6 text-center">
+        <p className="text-sm text-muted mt-6 text-center">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <Link to="/login" className="text-brand font-semibold hover:underline">
             Log in
           </Link>
         </p>

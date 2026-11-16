@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuthStore } from './store/authStore'
 import { ROLE_HOME } from './constants/roles'
+import Layout from './components/Layout'
 
 // Visiting "/" sends you to the right place depending on login state
 function HomeRedirect() {
@@ -22,15 +23,18 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Protected placeholder pages (replaced in the next days) */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={['BUSINESS']}>
-            <h1 className="p-8 text-2xl">Business dashboard</h1>
-          </ProtectedRoute>
-        }
-      />
+      {/* BUSINESS area: one ProtectedRoute + Layout wraps all three pages */}
+<Route
+  element={
+    <ProtectedRoute allowedRoles={['BUSINESS']}>
+      <Layout />
+    </ProtectedRoute>
+  }
+>
+  <Route path="/dashboard" element={<h1 className="text-2xl">Dashboard</h1>} />
+  <Route path="/shipments" element={<h1 className="text-2xl">My shipments</h1>} />
+  <Route path="/shipments/new" element={<h1 className="text-2xl">New shipment</h1>} />
+</Route>
       <Route
         path="/agent"
         element={
