@@ -5,6 +5,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { useAuthStore } from './store/authStore'
 import { ROLE_HOME } from './constants/roles'
 import Layout from './components/Layout'
+import Dashboard from './pages/Dashboard'
+import MyShipments from './pages/MyShipments'
+import CreateShipment from './pages/CreateShipment'
 
 // Visiting "/" sends you to the right place depending on login state
 function HomeRedirect() {
@@ -31,9 +34,9 @@ export default function App() {
     </ProtectedRoute>
   }
 >
-  <Route path="/dashboard" element={<h1 className="text-2xl">Dashboard</h1>} />
-  <Route path="/shipments" element={<h1 className="text-2xl">My shipments</h1>} />
-  <Route path="/shipments/new" element={<h1 className="text-2xl">New shipment</h1>} />
+  <Route path="/dashboard" element={<Dashboard />} />
+<Route path="/shipments" element={<MyShipments />} />
+<Route path="/shipments/new" element={<CreateShipment />} />
 </Route>
       <Route
         path="/agent"

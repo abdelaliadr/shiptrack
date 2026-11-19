@@ -11,11 +11,21 @@
   --color-brand: #4F46E5;        /* primary accent */
   --color-brand-dark: #4338CA;   /* hover */
   --color-brand-soft: #EEF2FF;   /* light accent background */
+  --animate-loading: loading 1.3s ease-in-out infinite; /* loader animation for loader*/
 }
 
 body {
   @apply bg-app text-ink font-sans;
 }
+
+@keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(300%);
+    }
+  }
 
 /* Reusable building blocks*/
 @layer components {
