@@ -17,6 +17,7 @@ export const useShipment = (id) =>
   useQuery({
     queryKey: ['shipment', id],
     queryFn: () => getShipmentById(id),
+    retry: false,
   })
 
 export const useAssignedShipments = () =>

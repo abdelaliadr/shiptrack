@@ -8,6 +8,8 @@ import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import MyShipments from './pages/MyShipments'
 import CreateShipment from './pages/CreateShipment'
+import TrackSearch from './pages/TrackSearch'
+import TrackingPage from './pages/TrackingPage'
 
 // Visiting "/" sends you to the right place depending on login state
 function HomeRedirect() {
@@ -25,6 +27,8 @@ export default function App() {
       <Route path="/" element={<HomeRedirect />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/track" element={<TrackSearch />} />
+      <Route path="/track/:id" element={<TrackingPage />} />
 
       {/* BUSINESS area: one ProtectedRoute + Layout wraps all three pages */}
 <Route
