@@ -20,6 +20,7 @@ import com.shiptrack.models.User;
 import com.shiptrack.repositories.ShipmentRepository;
 import com.shiptrack.repositories.TrackingEventRepository;
 import com.shiptrack.repositories.UserRepository;
+import com.shiptrack.dtos.AgentShipmentResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -159,11 +160,11 @@ public class ShipmentService {
                 .toList();
     }
 
-    // ===== Agent: get assigned shipments =====
-    public List<ShipmentResponse> getAssignedShipments(User agent) {
+ // ===== Agent: get assigned shipments =====
+    public List<AgentShipmentResponse> getAssignedShipments(User agent) {
         return shipmentRepository.findByAgentId(agent.getId())
                 .stream()
-                .map(this::toShipmentResponse)
+                .map(this::toAgentShipmentResponse)
                 .toList();
     }
 
@@ -175,6 +176,22 @@ public class ShipmentService {
                 shipment.getSenderCity(),
                 shipment.getReceiverName(),
                 shipment.getReceiverCity(),
+                shipment.getWeightKg(),
+                shipment.getStatus(),
+                shipment.getCreatedAt()
+        );
+    }
+    
+ // ===== Helper: Entity -> agent response (includes delivery contact info) =====
+    private AgentShipmentResponse toAgentShipmentResponse(Shipment shipment) {
+        return new AgentShipmentResponse(
+                shipment.getId(),
+                shipment.getSenderName(),
+                shipment.getSenderCity(),
+                shipment.getReceiverName(),
+                shipment.getReceiverCity(),
+                shipment.getReceiverAddress(),
+                shipment.getReceiverPhone(),
                 shipment.getWeightKg(),
                 shipment.getStatus(),
                 shipment.getCreatedAt()

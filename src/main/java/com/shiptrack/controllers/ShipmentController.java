@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shiptrack.config.UserPrincipal;
+import com.shiptrack.dtos.AgentShipmentResponse;
 import com.shiptrack.dtos.AssignAgentRequest;
 import com.shiptrack.dtos.CreateShipmentRequest;
 import com.shiptrack.dtos.ShipmentDetailResponse;
@@ -85,10 +86,9 @@ public class ShipmentController {
         return ResponseEntity.ok(shipmentService.getAllShipments());
     }
 
-    // Agent: get assigned shipments
     @GetMapping("/assigned")
     @PreAuthorize("hasRole('AGENT')")
-    public ResponseEntity<List<ShipmentResponse>> getAssignedShipments(
+    public ResponseEntity<List<AgentShipmentResponse>> getAssignedShipments(
             @AuthenticationPrincipal UserPrincipal principal) {
 
         return ResponseEntity.ok(shipmentService.getAssignedShipments(principal.getUser()));
